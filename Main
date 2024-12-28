@@ -1,0 +1,75 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "🧅 Onion Hub | South Bronx: The Trenches",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "🧅 Onion Hub",
+   LoadingSubtitle = "by Aldreno",
+   Theme = "AmberGlow", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "Onion Hub", -- Create a custom folder for your hub/game
+      FileName = "South Bronx: The Trenches"
+   },
+
+   Discord = {
+      Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "hello", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = false -- Set this to false to make them join the discord every time they load it up
+   }
+})
+
+-- Main Tab --
+
+local main_tab = Window:CreateTab('Main', 'circle-user') -- Title, Image
+
+-- Sections --
+
+local character_section = main_tab:CreateSection("Character")
+
+-- Elements --
+
+local walkspeed_slider = main_tab:CreateSlider({
+   Name = "Walkspeed",
+   Range = {0, 30},
+   Increment = 1,
+   Suffix = "Speed",
+   CurrentValue = 10,
+   Flag = "Walkspeed", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   local client = game.Players.LocalPlayer.Name
+   local humanoid = workspace.Characters[client].Humanoid
+   humanoid.WalkSpeed = Value
+   -- The function that takes place when the slider changes
+   -- The variable (Value) is a number which correlates to the value the slider is currently at
+   end,
+})
+
+local infhealth_toggle = main_tab:CreateToggle({
+   Name = "Inf Health",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+            if Value == true then
+                local client = game.Players.LocalPlayer.Name
+                local humanoid = workspace.Characters[client].Humanoid
+                humanoid.MaxHealth = 'inf'
+                humanoid.Health = 'inf'
+			elseif Value == false then
+                local client = game.Players.LocalPlayer.Name
+                local humanoid = workspace.Characters[client].Humanoid
+                humanoid.MaxHealth = 100
+                humanoid.Health = 100
+
+	   
+   end
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+   end,
+})
+
+
